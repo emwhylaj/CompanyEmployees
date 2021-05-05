@@ -9,10 +9,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.14">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 		<PackageReference Include="NLog" Version="4.7.9" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\LoggerService\LoggerService.csproj" />
+		<ProjectReference Include="..\Repository\Repository.csproj" />
 	</ItemGroup>
 </Project>
