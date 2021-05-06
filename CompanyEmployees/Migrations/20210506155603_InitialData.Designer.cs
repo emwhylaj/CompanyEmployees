@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CompanyEmployees.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20210505122217_DatabaseCreation")]
-    partial class DatabaseCreation
+    [Migration("20210506155603_InitialData")]
+    partial class InitialData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -44,6 +44,22 @@ namespace CompanyEmployees.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Companies");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("f61e67e9-1ae0-45d7-9f2f-a314ecedcd8b"),
+                            Address = "583 Wall Dr. Gwynn Oak, MD 21207",
+                            Country = "USA",
+                            Name = "IT_Solution Ltd"
+                        },
+                        new
+                        {
+                            Id = new Guid("0f434717-38fa-4024-ae67-ddf577797b7c"),
+                            Address = "312 Forest Avenue, BF 923",
+                            Country = "USA",
+                            Name = "Admin Solutions Ltd"
+                        });
                 });
 
             modelBuilder.Entity("Entities.Models.Employee", b =>
@@ -74,6 +90,32 @@ namespace CompanyEmployees.Migrations
                     b.HasIndex("CompanyId");
 
                     b.ToTable("Employees");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("bb08330a-9919-4634-b6e6-736298201ec7"),
+                            Age = 26,
+                            CompanyId = new Guid("f61e67e9-1ae0-45d7-9f2f-a314ecedcd8b"),
+                            Name = "Sam Raiden",
+                            Position = "Software developer"
+                        },
+                        new
+                        {
+                            Id = new Guid("7ef7a9ca-0427-4e14-bac8-8ea5d73f2794"),
+                            Age = 30,
+                            CompanyId = new Guid("f61e67e9-1ae0-45d7-9f2f-a314ecedcd8b"),
+                            Name = "James Miller",
+                            Position = "Software Developer"
+                        },
+                        new
+                        {
+                            Id = new Guid("54e9e7af-772d-49a1-9a8a-b0b3cc793cdc"),
+                            Age = 35,
+                            CompanyId = new Guid("0f434717-38fa-4024-ae67-ddf577797b7c"),
+                            Name = "Bob Martin",
+                            Position = "Administrator"
+                        });
                 });
 
             modelBuilder.Entity("Entities.Models.Employee", b =>

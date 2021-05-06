@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Contracts;
+﻿using Contracts;
 using Entities;
 using LoggerService;
 using Microsoft.AspNetCore.Builder;
@@ -8,7 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Repository;
-using ILoggerManager = LoggerService.ILoggerManager;
+
+//using ILoggerManager = LoggerService.ILoggerManager;
 
 namespace CompanyEmployees.ServiceExtensions
 {
@@ -29,9 +28,10 @@ namespace CompanyEmployees.ServiceExtensions
             });
 
         public static void ConfigureLoggerService(this IServiceCollection services) =>
-            services.AddScoped<ILoggerManager, LoggerManager>();
+            services.AddScoped<LoggerService.ILoggerManager, LoggerManager>();
 
-        public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration) => services.AddDbContext<RepositoryContext>(options => options.UseSqlServer(configuration.GetConnectionString("sqlConnection"), m => m.MigrationsAssembly("CompanyEmployees")));
+        public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration) =>
+            services.AddDbContext<RepositoryContext>(options => options.UseSqlServer(configuration.GetConnectionString("sqlConnection"), m => m.MigrationsAssembly("CompanyEmployees")));
 
         public static void ConfigureRepositoryManager(this IServiceCollection services) =>
              services.AddScoped<IRepositoryManager, RepositoryManager>();

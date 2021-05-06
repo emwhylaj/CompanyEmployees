@@ -23,13 +23,18 @@ namespace Repository
         public void Delete(T entity) => _repositoryContext.Set<T>().Remove(entity);
 
         public IQueryable<T> GetAll(bool trackChanges) =>
-            !trackChanges ? _repositoryContext.Set<T>().AsNoTracking() : _repositoryContext.Set<T>();
+            !trackChanges ?
+            _repositoryContext.Set<T>()
+            .AsNoTracking() :
+            _repositoryContext.Set<T>();
 
-        public IQueryable<T> GetByCondition(Expression<Func<T, bool>> expression, bool trackChanges) => !trackChanges ? _repositoryContext.Set<T>()
-                            .Where(expression)
-                               .AsNoTracking() :
-                                _repositoryContext.Set<T>()
-                                   .Where(expression);
+        public IQueryable<T> GetByCondition(Expression<Func<T, bool>> expression, bool trackChanges) =>
+                         !trackChanges ?
+                         _repositoryContext.Set<T>()
+                         .Where(expression)
+                         .AsNoTracking() :
+                         _repositoryContext.Set<T>()
+                         .Where(expression);
 
         public void Update(T entity) => _repositoryContext.Set<T>().Update(entity);
     }
