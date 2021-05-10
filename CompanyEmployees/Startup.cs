@@ -28,6 +28,7 @@ namespace CompanyEmployees
             services.ConfigureIISIntegration();
 
             services.ConfigureSqlContext(Configuration);
+            services.AddAutoMapper(typeof(Startup));
 
             services.ConfigureRepositoryManager();
 
