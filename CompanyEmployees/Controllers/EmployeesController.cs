@@ -68,6 +68,11 @@ namespace CompanyEmployees.Controllers
                 _logger.LogError("EmployeeForCfeationDto object sent from client is null.");
                 return BadRequest("EmployeeForCreationDto object is null");
             }
+            if (!ModelState.IsValid)
+            {
+                _logger.LogInfo($"Company with id: {companyId} doesn't exist in the database");
+                return UnprocessableEntity(ModelState);
+            }
             var company = _repositoryManager.Company.GetCompany(companyId, trackChanges: false);
             if (company == null)
             {
@@ -112,6 +117,11 @@ namespace CompanyEmployees.Controllers
                 _logger.LogError("EmployeeUpdateDto object sent from client is null.");
                 return BadRequest("EmployeeUpdateDto object is null");
             }
+            if (!ModelState.IsValid)
+            {
+                _logger.LogError("Employee state for the EmployeeForUpdateDto object");
+                return UnprocessableEntity(ModelState);
+            }
             var company = _repositoryManager.Company.GetCompany(companyId, trackChanges: false);
             if (company == null)
             {
@@ -146,6 +156,12 @@ namespace CompanyEmployees.Controllers
             }
             var employeeToPatch = _mapper.Map<EmployeeForUpdateDto>(employeeEntity);
             pathchDoc.ApplyTo(employeeToPatch);
+            TryValidateModel(employeeToPatch);
+            if (!ModelState.IsValid)
+            {
+                _logger.LogError("Invalid model state for the patch document");
+                return UnprocessableEntity(ModelState);
+            }
             _mapper.Map(employeeToPatch, employeeEntity);
             _repositoryManager.Save();
             return NoContent();
