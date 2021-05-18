@@ -26,10 +26,10 @@ namespace Repository
             Delete(employee);
         }
 
-        public Task<Employee> GetEmployeeAsync(Guid companyId, Guid id, bool trackChanges) =>
-            GetByCondition(m => m.CompanyId.Equals(companyId) && m.Id.Equals(id), trackChanges).SingleOrDefaultAsync();
+        public Employee GetEmployee(Guid companyId, Guid id, bool trackChanges) =>
+            GetByCondition(m => m.CompanyId.Equals(companyId) && m.Id.Equals(id), trackChanges).SingleOrDefault();
 
-        public async Task<IEnumerable<Employee>> GetEmployeesAsync(Guid companyId, bool trackChanges) =>
+        public IEnumerable<Employee> GetEmployees(Guid companyId, bool trackChanges) =>
             GetByCondition(e => e.CompanyId.Equals(companyId), trackChanges).OrderBy(e => e.Name);
     }
 }

@@ -40,6 +40,6 @@ namespace Repository
             }
         }
 
-        public Task SaveAsync() => _repositoryContext.SaveChangesAsync();
+        public void Save() => _repositoryContext.SaveChanges();
     }
 }
