@@ -22,13 +22,13 @@ namespace Repository
             Delete(company);
         }
 
-        public IEnumerable<Company> GetAllCompanies(bool trackChanges) =>
+        public async Task<IEnumerable<Company>> GetAllCompaniesAsync(bool trackChanges) => await
             GetAll(trackChanges)
             .OrderBy(c => c.Name)
-            .ToList();
+            .ToListAsync();
 
-        public IEnumerable<Company> GetByIds(IEnumerable<Guid> ids, bool trackChanges) => GetByCondition(m => ids.Contains(m.Id), trackChanges).ToList();
+        public async Task<IEnumerable<Company>> GetByIdsAsync(IEnumerable<Guid> ids, bool trackChanges) => await GetByCondition(m => ids.Contains(m.Id), trackChanges).ToListAsync();
 
-        public Company GetCompany(Guid companyId, bool trackChanges) => GetByCondition(c => c.Id.Equals(companyId), trackChanges).SingleOrDefault();
+        public async Task<Company> GetCompanyAsync(Guid companyId, bool trackChanges) => await GetByCondition(c => c.Id.Equals(companyId), trackChanges).SingleOrDefaultAsync();
     }
 }
