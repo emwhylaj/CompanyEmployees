@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Contracts;
 using Entities;
 using Entities.Models;
+using Entities.RequestFeatures;
 using Microsoft.EntityFrameworkCore;
 
 namespace Repository
@@ -29,7 +30,15 @@ namespace Repository
         public async Task<Employee> GetEmployeeAsync(Guid companyId, Guid id, bool trackChanges) => await
             GetByCondition(m => m.CompanyId.Equals(companyId) && m.Id.Equals(id), trackChanges).SingleOrDefaultAsync();
 
-        public async Task<IEnumerable<Employee>> GetEmployeesAsync(Guid companyId, bool trackChanges) => await
-            GetByCondition(e => e.CompanyId.Equals(companyId), trackChanges).OrderBy(e => e.Name).ToListAsync();
+        public async Task<PagedList<Employee>> GetEmployeesAsync(Guid companyId, EmployeeParameters employeeParameters, bool trackChanges)
+        {
+            var employees = await
+
+             GetByCondition(e => e.CompanyId.Equals(companyId), trackChanges)
+             .OrderBy(e => e.Name)
+             .ToListAsync();
+            return PagedList<Employee>
+                .ToPageList(employees, employeeParameters.PageNumber, employeeParameters.PageSize);
+        }
     }
 }
