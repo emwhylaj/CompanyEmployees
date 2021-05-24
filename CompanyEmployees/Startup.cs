@@ -1,4 +1,5 @@
 using System.IO;
+using CompanyEmployees.ActionFilters;
 using CompanyEmployees.ServiceExtensions;
 using Contracts;
 using Microsoft.AspNetCore.Builder;
@@ -33,6 +34,7 @@ namespace CompanyEmployees
             services.AddAutoMapper(typeof(Startup));
 
             services.ConfigureRepositoryManager();
+            services.AddScoped<ValidationFilterAttribute>();
 
             services.AddControllers(config =>
             {
