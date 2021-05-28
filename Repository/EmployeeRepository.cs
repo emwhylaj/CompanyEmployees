@@ -34,7 +34,7 @@ namespace Repository
         {
             var employees = await
 
-             GetByCondition(e => e.CompanyId.Equals(companyId), trackChanges)
+             GetByCondition(e => e.CompanyId.Equals(companyId) && (e.Age >= employeeParameters.MinAge && e.Age <= employeeParameters.MaxAge), trackChanges)
              .OrderBy(e => e.Name)
              .ToListAsync();
             return PagedList<Employee>
