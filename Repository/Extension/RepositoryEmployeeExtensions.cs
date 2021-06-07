@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using Entities.Models;
+using System.Linq.Dynamic.Core;
+using Repository.Extension.Utility;
 
 namespace Repository.Extension
 {
@@ -17,6 +20,13 @@ namespace Repository.Extension
                 return employees;
             var lowerCaseTerm = searchTerm.Trim().ToLower();
             return employees.Where(e => e.Name.ToLower().Contains(lowerCaseTerm));
+        }
+
+        public static IQueryable<Employee> Sort(this IQueryable<Employee> employees, string orderByQueryString)
+        {
+            if (string.IsNullOrWhiteSpace(orderByQueryString))
+                return employees.OrderBy(e => e.Name);
+            OrderQueryBuilder.CreateOrderQuery<Employee>(orderByQueryString);
         }
     }
 }
