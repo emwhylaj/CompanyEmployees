@@ -35,6 +35,7 @@ namespace CompanyEmployees
 
             services.ConfigureRepositoryManager();
             services.AddScoped<ValidationFilterAttribute>();
+            services.ConfigureSwagger();
 
             services.AddControllers(config =>
             {
@@ -68,6 +69,11 @@ namespace CompanyEmployees
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.All
+            });
+            app.UseSwagger();
+            app.UseSwaggerUI(s =>
+            {
+                s.SwaggerEndpoint("/swagger/v1/swagger.json", "CompanyEmployees API v1");
             });
 
             app.UseRouting();
