@@ -28,7 +28,7 @@ namespace Repository.Extension.Utility
 
                 var direction = param.EndsWith("desc") ? "descending" : "ascending";
 
-                orderQueryBuilder.Append($"{objectProperty.Name.ToString()} {direction},");
+                orderQueryBuilder.Append($"{objectProperty.Name} {direction},");
             }
             var orderQuery = orderQueryBuilder.ToString().TrimEnd(',', ' ');
 

@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NLog;
+using Repository;
 
 namespace CompanyEmployees
 {
@@ -29,13 +30,18 @@ namespace CompanyEmployees
             services.ConfigureLoggerService();
             services.ConfigureCors();
             services.ConfigureIISIntegration();
+            services.AddAuthentication();
+            services.ConfigureIdentity();
+            services.ConfigureJWT(Configuration);
 
             services.ConfigureSqlContext(Configuration);
             services.AddAutoMapper(typeof(Startup));
 
             services.ConfigureRepositoryManager();
             services.AddScoped<ValidationFilterAttribute>();
+            services.AddScoped<ValidateCompanyExistsAttribute>();
             services.ConfigureSwagger();
+            services.AddScoped<IAuthenticationManager, AuthenticationManager>();
 
             services.AddControllers(config =>
             {
@@ -59,6 +65,8 @@ namespace CompanyEmployees
                 app.UseDeveloperExceptionPage();
             }
             app.ConfigureExceptionHandler(logger);
+
+            app.UseAuthentication();
 
             app.UseHttpsRedirection();
 

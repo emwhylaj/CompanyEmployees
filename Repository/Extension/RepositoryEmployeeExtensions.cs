@@ -26,7 +26,7 @@ namespace Repository.Extension
         {
             if (string.IsNullOrWhiteSpace(orderByQueryString))
                 return employees.OrderBy(e => e.Name);
-            var orderQuery = OrderQueryBuilder.CreateOrderQuery<Employee>(orderByQueryString);
+            //var orderQuery = OrderQueryBuilder.CreateOrderQuery<Employee>(orderByQueryString);
             var orderParams = orderByQueryString.Trim().Split(',');
             var propertyInfos = typeof(Employee).GetProperties(BindingFlags.Public | BindingFlags.Instance);
             var orderQueryBuilder = new StringBuilder();
@@ -40,7 +40,7 @@ namespace Repository.Extension
                 if (objectProperty == null)
                     continue;
                 var direction = param.EndsWith(" desc") ? "descending" : "ascending";
-                orderQueryBuilder.Append($"{objectProperty.Name.ToString()}, {direction}");
+                orderQueryBuilder.Append($"{objectProperty.Name}, {direction}");
             }
             var orderQuery = orderQueryBuilder.ToString().TrimEnd(',', ' ');
             if (string.IsNullOrWhiteSpace(orderQuery))
