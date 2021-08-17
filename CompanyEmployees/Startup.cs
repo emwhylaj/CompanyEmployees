@@ -82,6 +82,7 @@ namespace CompanyEmployees
             app.UseSwaggerUI(s =>
             {
                 s.SwaggerEndpoint("/swagger/v1/swagger.json", "CompanyEmployees API v1");
+                s.SwaggerEndpoint("/swagger/v2/swagger.json", "CompanyEmployees API v2");
             });
 
             app.UseRouting();

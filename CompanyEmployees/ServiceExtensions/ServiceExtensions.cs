@@ -12,6 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Repository;
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace CompanyEmployees.ServiceExtensions
@@ -48,7 +49,45 @@ namespace CompanyEmployees.ServiceExtensions
         {
             services.AddSwaggerGen(s =>
             {
-                s.SwaggerDoc("v1", new OpenApiInfo { Title = "CompanyEmployees", Version = "v1" });
+                s.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "CompanyEmployees",
+                    Version = "v1",
+                    Description = "CompanyEmployees API by Emwhylaj",
+                    TermsOfService = new Uri("https://emwhylajhub.com/terms"),
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Muyiwa Olalekan",
+                        Email = "muyiwa.olalekan@outlook.com",
+                        Url = new Uri("https://twitter.com/emahylaj"),
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = "CompanyEmloyees API LICX",
+                        Url = new Uri("https://emwhylajhub/license"),
+                    }
+                });
+                s.SwaggerDoc("v2", new OpenApiInfo { Title = "CompanyEmployees", Version = "v2" });
+
+                var securityScheme = new OpenApiSecurityScheme
+                {
+                    Name = "Authentication",
+                    Description = "Place to add JWT with Bearer",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "bearer", //must be lower case
+                    BearerFormat = "JWT",
+                    Reference = new OpenApiReference
+                    {
+                        Id = JwtBearerDefaults.AuthenticationScheme,
+                        Type = ReferenceType.SecurityScheme
+                    }
+                };
+                s.AddSecurityDefinition(securityScheme.Reference.Id, securityScheme);
+                s.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {securityScheme,new string[] {} }
+                });
             });
         }
 
