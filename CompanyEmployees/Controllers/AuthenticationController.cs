@@ -54,7 +54,7 @@ namespace CompanyEmployees.Controllers
         {
             if (!await _authManager.ValidateUser(userForAuthenticationDto))
             {
-                _loggerManager.LogWarn($"{nameof(Authenticate)} : Authentication failed. Wrong username of password");
+                _loggerManager.LogWarn($"{nameof(Authenticate)} : Authentication failed. Wrong username or password");
                 return Unauthorized();
             }
             return Ok(new { Token = await _authManager.CreateToken() });
