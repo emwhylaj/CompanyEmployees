@@ -40,8 +40,12 @@ namespace CompanyEmployees.Controllers
         }
 
         [HttpGet("{id}", Name = "CompanyById")]
-        public async Task<IActionResult> GetCompany(Guid id)
+        public async Task<IActionResult> GetCompany(EncryptedRequest encryptedRequest)
         {
+            Guid id = new Guid();
+
+
+
             var company = await _repositoryManager.Company.GetCompanyAsync(id, trackChanges: false);
             if (company == null)
             {

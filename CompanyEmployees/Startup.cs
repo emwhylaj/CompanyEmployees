@@ -66,9 +66,11 @@ namespace CompanyEmployees
             }
             app.ConfigureExceptionHandler(logger);
 
+
             app.UseAuthentication();
 
             app.UseHttpsRedirection();
+
 
             app.UseStaticFiles();
 
@@ -84,6 +86,7 @@ namespace CompanyEmployees
                 s.SwaggerEndpoint("/swagger/v1/swagger.json", "CompanyEmployees API v1");
                 s.SwaggerEndpoint("/swagger/v2/swagger.json", "CompanyEmployees API v2");
             });
+            app.UseMiddleware<EncryptionMiddleware>();
 
             app.UseRouting();
 
